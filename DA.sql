@@ -67,7 +67,7 @@ SELECT company, avg(star_rating) AS avg_star_rating
 FROM data_analytics_jobs
 WHERE company IS NOT NULL AND star_rating IS NOT NULL AND review_count > 5000
 GROUP BY company
-ORDER BY avg_star_rating DESC;
+ORDER BY avg_star_rating DESC; //4.199999
 
 -------11.Find all the job titles that contain the word ‘Analyst’.
 How many different job titles are there?------------------------------------------------------
@@ -82,9 +82,9 @@ FROM data_analytics_jobs;   // 881
 ---------12.How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’?
 What word do these positions have in common?
 
-SELECT COUNT(title) AS job_title
+SELECT title AS job_title
 FROM data_analytics_jobs
-WHERE title NOT ILIKE '%Analyst%' OR title NOT ILIKE '%Analytics';
+WHERE title NOT ILIKE '%Analyst%' AND title NOT ILIKE '%Analytics%';  ///4: Data visualization specialist
 
 -----**BONUS:**
 You want to understand which jobs requiring SQL are hard to fill. 
@@ -94,7 +94,14 @@ Find the number of jobs by industry (domain) that require SQL and have been post
   - Which three industries are in the top 3 on this list? How many jobs have been listed 
   for more than 3 weeks for each of the top 3?
 
-SELECT DISTINCT(domain), title, days_since_posting
+SELECT domain, COUNT(title) AS number_of_jobs
 FROM data_analytics_jobs
-WHERE skill ILIKE '%SQL%' AND domain IS NOT NULL AND days_since_posting > 21
-ORDER BY days_since_posting DESC;
+WHERE skill ='SQL' AND days_since_posting >21 AND domain IS NOT NULL
+GROUP BY domain;
+
+
+SELECT DISTINCT(domain) 
+FROM data_analytics_jobs
+WHERE domain IS NOT NULL AND skill ILIKE '%SQL%' AND days_since_posting >21;
+
+
