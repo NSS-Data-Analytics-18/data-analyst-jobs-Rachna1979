@@ -96,12 +96,11 @@ Find the number of jobs by industry (domain) that require SQL and have been post
 
 SELECT domain, COUNT(title) AS number_of_jobs
 FROM data_analytics_jobs
-WHERE skill ='SQL' AND days_since_posting >21 AND domain IS NOT NULL
-GROUP BY domain;
+WHERE skill ILIKE '%SQL%' AND days_since_posting >21 AND domain IS NOT NULL
+GROUP BY domain
+ORDER BY number_of_jobs DESC;
 
 
-SELECT DISTINCT(domain) 
-FROM data_analytics_jobs
-WHERE domain IS NOT NULL AND skill ILIKE '%SQL%' AND days_since_posting >21;
+
 
 
